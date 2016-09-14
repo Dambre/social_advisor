@@ -1,0 +1,155 @@
+{% load staticfiles %}
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Social media post text content advisor">
+  <meta name="author" content="https://github.com/Dambre/">
+  <meta name="author" content="https://github.com/aleksandrmaksimoviclt">
+  <title>Social Advisor</title>
+  <!-- Material Design Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link href='https://fonts.googleapis.com/css?family=Maven+Pro:400,500' rel='stylesheet' type='text/css'>
+
+  <!-- Materialize CSS Framework -->
+  <link href="{% static 'hashbattle/css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'hashbattle/css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+  <div id="preloader">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <section class="hide" id="site-content">
+
+    <ul id="profile-dropdown" class="dropdown-content">
+      <li><a class="dropdown-item" href="#!">F.A.Q</a></li>
+      <li><a class="dropdown-item" href="#!">Settings</a></li>
+      <li><a class="dropdown-item" href="#!">Log Out</a></li>
+    </ul>
+
+    <nav class="light-blue">
+      <div class="container nav-wrapper">
+        <a href="#!" class="brand-logo">Social Advisor</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+              <a class="profile-wrapper dropdown-button" href="#" data-activates="profile-dropdown">
+                <i class="material-icons right profile">&#xE5C5;</i>
+                <img class="profile-img" src="{% static 'hashbattle/img/avatar.jpg' %}">
+                <span class="navigation-top-bar-profile-name-wrapper">Aleksandr Maksimovič</span>
+              </a>
+          </li>
+        </ul>
+        <ul class="side-nav">
+          <li><a href="sass.html">Sass</a></li>
+          <li><a href="badges.html">Components</a></li>
+          <li><a href="collapsible.html">Javascript</a></li>
+          <li><a href="mobile.html">Mobile</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="container row" style="display:none;" id="chart-area">
+      
+      <div class="card card-styling graphics-columns">
+        <div class="network-chart-wrapper">
+          <div class="sugested-words-wrapper">
+            <!--<div class="chart-heading-wrapper">
+              Suggested words
+            </div>-->
+            <a href="#1"></a>1. Top<br>
+            <a href="#2"></a>2. Bottom<br>
+            <a href="#3"></a>3. Left<br>
+            <a href="#4"></a>4. Right<br>
+            <a href="#5"></a>5. Center<br>
+          </div>
+        </div>  
+      </div>
+
+      <div class="card card-styling graphics-columns c">
+        <div class="network-chart-wrapper">
+          <!--<div class="chart-heading-wrapper">
+            Popularity comparison
+          </div>-->
+          <div style="height:inherit; width:inherit;">
+            <canvas id="bar-chart"></canvas>
+          </div>
+        </div>  
+      </div>
+
+      <div class="card card-styling graphics-columns">
+        <div class="network-chart-wrapper">
+        <!--<div class="chart-heading-wrapper">
+          Popularity dynamics
+        </div>-->
+          <div style="height:inherit; width:inherit;">
+            <canvas id="line-chart"></canvas>
+          </div>
+        </div>  
+      </div>
+    </section>
+
+    <section class="container" id="analyzer-card-wrapper">
+      <form method="POST" id="review-post" action="/analyze/"> 
+        {% csrf_token %}
+        <div class="card card-styling social-media-post-analyze-wrapper">
+          <textarea placeholder="Enter your text here to analyze it with our tool..." class="text-field" id="user_input_to_analyze" type="text" onkeyup="countChar(this)"></textarea>
+          <div class="text-field-char-counter right" id="char-count">140</div>
+        </div>
+
+
+        <input id="submit_to_review" value="Review" type="submit" class="orange btn right"></input>
+      </form>
+
+    </section>
+  </section>
+
+  <!--  Scripts-->
+
+  <!-- jQuery Library -->
+  <script src="{% static 'hashbattle/js/jquery-2.1.1.min.js' %}"></script>
+  <!-- Materialize.js -->
+  <script src="{% static 'hashbattle/js/materialize.js' %}"></script>
+  <!-- Materialize.js Initialization -->
+  <script src="{% static 'hashbattle/js/init.js' %}"></script>
+  <!-- ChartsX.js -->
+  <script src="{% static 'hashbattle/js/chartX.js' %}"></script>
+  <!-- Bar.js -->
+  <script src="{% static 'hashbattle/js/Chart.Bar.js' %}"></script>
+  <!-- Charts Initialization -->
+  <script src="{% static 'hashbattle/js/charts.js' %}"></script>
+  <!-- Preloader Initialization -->
+  <script src="{% static 'hashbattle/js/preloader.js' %}" type="text/javascript"></script>
+  <script>
+    function countChar(val) {
+      var len = val.value.length;
+
+      if (len > 140) {
+        val.value = val.value.substring(0, 140);
+      } else {
+        $('#char-count').text(140 - len);
+      }
+    };
+  </script>
+  </body>
+</html>

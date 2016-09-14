@@ -1,0 +1,10 @@
+#This is example of local_settings.py
+'''
+This file contains sensitive data
+'''
+
+
+consumer_key = "random_key"
+consumer_secret = "random"
+access_token = "random"
+access_token_secret = "random"
