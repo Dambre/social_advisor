@@ -6,13 +6,20 @@ from django.utils import timezone
 from datetime import datetime
 from django.db import models
 
+import nltk
+
+WORD_TYPES = {
+    'NN': 'Noun',
+    'ADJ': 'Adjective',
+    'ADV': 'Adverb',
+    'V', 'Verb'
+}
 
 class Word(models.Model):
     id = models.UUIDField(primary_key=True, 
         default=uuid.uuid4, editable=False)
     word = models.CharField(max_length=140, unique=True, editable=False)
-    is_synonym = models.BooleanField(default=False, editable=False)
-    is_hashtag = models.BooleanField(default=False, editable=False)
+    type = models.CharField(max_lenth=5, editable=False)
     last_tweet_id = models.CharField(max_length=50, default='0', editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
@@ -24,8 +31,6 @@ class Word(models.Model):
         return self.word
 
     def save(self, *args, **kwargs):
-        if self.word[0] == '#':
-            self.is_hashtag = True
         self.word = self.word.lower()
         super(Word, self).save(*args, **kwargs)
     

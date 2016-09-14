@@ -1,6 +1,6 @@
 Social Advisor
 ===============
-This application analyses twitter tweets and makes suggestions to write more reachable tweets.
+This application analyses twitter and makes suggestions to write more reachable tweets.
 
 This application is written in python3. Download app from github:
 

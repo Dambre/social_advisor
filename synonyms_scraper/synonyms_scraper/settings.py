@@ -1,4 +1,14 @@
 # -*- coding: utf-8 -*-
+import sys
+import os
+import django
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+sys.path.append(BASE_DIR + '/../social_advisor')
+os.environ['DJANGO_SETTINGS_MODULE'] = 'hashbattle.settings'
+
+django.setup()
 
 # Scrapy settings for synonyms_scraper project
 #

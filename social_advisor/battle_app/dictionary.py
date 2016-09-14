@@ -6,6 +6,7 @@ from .models import Word, Synonym
 from . import filters as flt
 
 
+
 def exclude_by_type(
     text, word_types=flt.TYPES,
     wordparts=flt.EXCLUDE_WORDPARTS):

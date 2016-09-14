@@ -9,6 +9,5 @@ import scrapy
 
 
 class SynonymsScraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    word = scrapy.Field()
+    synonym = scrapy.Field()
