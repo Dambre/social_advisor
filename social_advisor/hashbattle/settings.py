@@ -14,9 +14,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'battle_app.apps.BattleAppConfig',
+    
     'django_extensions',
-    'rest_framework'
+    'rest_framework',
+    
+    'battle_app',
+    'synonyms',
 
 ]
 
@@ -118,7 +121,6 @@ except KeyError:
 
 # Import settings such as config, secrets etc.
 try:
-    print('test')
     from .local_settings import *
 except Exception:
     pass
