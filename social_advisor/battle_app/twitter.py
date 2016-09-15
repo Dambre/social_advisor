@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pytz
+import logging
 from datetime import datetime
 
 from django.conf import settings
@@ -9,6 +10,10 @@ import tweepy
 
 from .models import WordUsage, Word
 from .dictionary import exclude_by_type
+
+
+logger = logging.getLogger(__name__)
+
 
 def auth():
     auth = tweepy.OAuthHandler(settings.CONSUMER_KEY, settings.CONSUMER_SECRET)
@@ -31,11 +36,13 @@ def get_word_statistics(search_word):
             result_type='recent',
             since_id=last_tweet_id)
     
-    except Exception:
+    except Exception as e:
         tweets = []
+        logger.error(e)
 
     for tweet in tweets:
         print(tweet.text)
+        logger.info(tweet)
         if last_tweet_id < tweet.id:
             last_tweet_id = tweet.id
         words = exclude_by_type(tweet.text)

@@ -1,33 +1,25 @@
 import uuid
 import pytz
+from datetime import datetime
 
 from django.utils import timezone
-from datetime import datetime
 from django.db import models
 
+import nltk; nltk.data.path.append('nltk_data')
 
+from .filters import TYPES_DESC
 
-NN = 'NN'
-ADJ = 'ADJ'
-ADV = 'ADV'
-V = 'V'
-
-WORD_TYPES = (
-    (NN, 'Noun'),
-    (ADJ, 'Adjective'),
-    (ADV, 'Adverb'),
-    (V, 'Verb')
-)
+WORD_TYPES = [_type for _type in TYPES_DESC]
 
 
 class Word(models.Model):
     id = models.UUIDField(primary_key=True, 
         default=uuid.uuid4, editable=False)
-    word = models.CharField(max_length=140, unique=True, editable=False)
-    type = models.CharField(choices=WORD_TYPES, max_length=5, null=True)
-    last_tweet_id = models.CharField(max_length=50, default='0', editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    word = models.CharField(max_length=140, unique=True)
+    word_type = models.CharField(choices=WORD_TYPES, max_length=5, null=True)
+    last_tweet_id = models.CharField(max_length=50, default='0')
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         ordering = ('-updated_at',)
@@ -37,6 +29,9 @@ class Word(models.Model):
 
     def save(self, *args, **kwargs):
         self.word = self.word.lower()
+        if not self.word_type:
+            word, _type = nltk.pos_tag([self.word,])[0]
+            self.word_type = _type
         super(Word, self).save(*args, **kwargs)
     
     def update_latest_id(self, tweet_id):
@@ -48,6 +43,9 @@ class Word(models.Model):
 class Synonym(models.Model):
     synonym_to = models.ForeignKey(Word, related_name='synonym_to_word', null=True)
     word = models.ForeignKey(Word)
+
+    def __str__(self):
+        return self.synonym_to.word + ' synonym to ' + self.word.word
 
     class Meta:
         unique_together = (('synonym_to', 'word'),)

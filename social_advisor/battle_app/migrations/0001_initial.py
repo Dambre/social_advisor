@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('word', models.CharField(editable=False, max_length=140, unique=True)),
-                ('type', models.CharField(choices=[('NN', 'Noun'), ('ADJ', 'Adjective'), ('ADV', 'Adverb'), ('V', 'Verb')], max_length=5, null=True)),
+                ('word_type', models.CharField(choices=[('NN', 'Noun'), ('ADJ', 'Adjective'), ('ADV', 'Adverb'), ('V', 'Verb')], max_length=5, null=True)),
                 ('last_tweet_id', models.CharField(default='0', editable=False, max_length=50)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False)),

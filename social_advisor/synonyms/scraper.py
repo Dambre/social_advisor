@@ -23,8 +23,13 @@ def scrape(word):
 
     synonyms = nltk.pos_tag(exclude_by_type(synonyms))
     word = Word.objects.get(word=word)
+    print('\n' + word.word + ': ')
     with transaction.atomic():
         for synonym, type in synonyms:
-            syn, created = Word.objects.get_or_create(
-                word=synonym, type=type)
-            Synonym.objects.create(word=word, synonym_to=syn)        
+            try:
+                print(synonym,)
+                syn, created = Word.objects.get_or_create(
+                    word=synonym, word_type=type)
+                Synonym.objects.create(word=syn, synonym_to=word)        
+            except:
+                print('Exception')

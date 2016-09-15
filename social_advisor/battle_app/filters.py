@@ -1,4 +1,5 @@
 import enchant
+import nltk; nltk.data.path.append('nltk_data')
 
 en_US = enchant.Dict('en_US')
 en_GB = enchant.Dict('en_GB')
@@ -13,7 +14,14 @@ EXCLUDE_TYPES = ('$', "''", '(', ')', ',',
     'MD', 'PDT', 'POS', 'PRP', 'PRP$', 'SYM', 'TO')
 
 # TYPES - tuple of required word type e.g. "NN" - noun etc.
-TYPES = ('NN', 'ADV', 'ADJ')
+TYPES = (
+	'NN', 'NNS',
+	'RB', 'RBR', 'RBS',
+	'JJ', 'JJR', 'JJS',
+	'VB')
+
+tagdict = nltk.data.load('help/tagsets/upenn_tagset.pickle')
+TYPES_DESC = [(_type, tagdict[_type][0]) for _type in TYPES]
 
 #exclude words with prefixes or parts in words e.g http://word.com
 EXCLUDE_WORDPARTS = ('http://', '//', 'https://', 'HTTP://', 'HTTPS://')
